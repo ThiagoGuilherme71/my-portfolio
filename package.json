@@ -9,8 +9,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "predeploy": "npm run build",
-    "preview": "vite preview",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist",
+    "preview": "vite preview"
   },
   "dependencies": {
     "framer-motion": "^12.23.25",
