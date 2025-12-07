@@ -558,7 +558,7 @@ function HeroSection({ mousePosition }) {
           transition={{ duration: 1, delay: 0.4 }}
           className="text-2xl sm:text-3xl text-stone-600 mb-8 font-light"
         >
-          <strong>Desenvolvedor De Software</strong>
+          <strong>Software Developer</strong>
         </motion.div>
 
         <motion.p
@@ -901,14 +901,23 @@ function ExperienceCard({ exp, index }) {
           className="fixed inset-0 flex items-center justify-center z-[99999]"
           style={{ pointerEvents: 'auto' }}
         >
-          <div className="absolute inset-0 bg-black/20" onClick={() => setActiveDetail(null)} />
-          <div className="relative">
-            <div className="bg-white border border-amber-700/30 shadow-2xl rounded-xl p-6 text-sm text-stone-700 w-80 max-w-full">
+          <div
+            className="absolute inset-0 bg-black/20"
+            onClick={() => setActiveDetail(null)}
+            style={{ touchAction: 'manipulation', pointerEvents: 'auto' }}
+          />
+          <div className="relative" style={{ pointerEvents: 'auto' }}>
+            <div
+              className="bg-white border border-amber-700/30 shadow-2xl rounded-xl p-6 text-sm text-stone-700 w-80 max-w-full"
+              onClick={e => e.stopPropagation()}
+              style={{ pointerEvents: 'auto', touchAction: 'manipulation' }}
+            >
               <div className="mb-2 font-bold text-amber-800">{exp.achievements[activeDetail]}</div>
               <div>{achievementDetails.find(([title]) => title === exp.achievements[activeDetail])?.[1]}</div>
               <button
                 className="mt-4 px-4 py-1 bg-amber-700 text-white rounded-full font-semibold hover:bg-amber-800 transition-colors"
-                onClick={() => setActiveDetail(null)}
+                onClick={e => { e.stopPropagation(); setActiveDetail(null); }}
+                style={{ touchAction: 'manipulation', pointerEvents: 'auto' }}
               >Fechar</button>
             </div>
           </div>
