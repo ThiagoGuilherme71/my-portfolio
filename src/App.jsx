@@ -606,66 +606,134 @@ function HeroSection({ mousePosition }) {
 function SobreSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // Caminho da imagem do escudo do Vitória
+  const ecvImg = `${import.meta.env.BASE_URL}imgecv.jpeg`;
+
+  // Fecha modal ao clicar fora
+  useEffect(() => {
+    if (!modalOpen) return;
+    function handleClick(e) {
+      if (e.target.classList.contains('ecv-modal-bg')) setModalOpen(false);
+    }
+    window.addEventListener('mousedown', handleClick);
+    return () => window.removeEventListener('mousedown', handleClick);
+  }, [modalOpen]);
 
   return (
     <section id="sobre" ref={ref} className="min-h-screen flex items-center justify-center px-4 py-20 bg-amber-100/30">
-      <div className="max-w-4xl w-full">
-        <SectionTitle title="Sobre Mim" />
+      <div className="max-w-4xl w-full relative flex">
+        {/* Bolinhas flutuantes de hobbies/curiosidades */}
+        <div className="hidden md:flex flex-col gap-6 items-center absolute left-[-170px] top-1/2 -translate-y-1/2 z-20">
+            {/* Bolinha ECV */}
+            {/*<motion.button
+              onClick={() => setModalOpen(true)}
+              initial={{ y: 0 }}
+              animate={{ y: [0, -22, 0, 22, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="w-24 h-24 rounded-full shadow-lg border-4 border-amber-700 bg-white flex items-center justify-center cursor-pointer hover:scale-110 transition-transform overflow-hidden"
+              style={{ boxShadow: '0 8px 32px 0 rgba(180,83,9,0.12)' }}
+              aria-label="Curiosidade: Esporte Clube Vitória"
+            >
+              <img 
+                src={ecvImg} 
+                alt="Escudo do Esporte Clube Vitória" 
+                className="w-full h-full object-cover rounded-full" 
+                style={{ display: 'block' }}
+              />
+            </motion.button>*/}
+        </div>
 
-        <motion.div
-          initial={{ y: 50, opacity: 0 }}
-          animate={isInView ? { y: 0, opacity: 1 } : {}}
-          transition={{ duration: 0.8 }}
-          className="bg-white/70 backdrop-blur-sm p-8 sm:p-12 rounded-2xl border-2 border-amber-700/20 shadow-xl"
-        >
-          <div className="space-y-6 text-stone-700 text-lg leading-relaxed">
-            <p>
-              Olá! Sou <strong className="text-amber-800">Thiago Guilherme</strong>, desenvolvedor full-stack 
-              com foco em PHP e Laravel, natural de Salvador - BA. Minha jornada na tecnologia começou 
-              em 2023, e desde então tenho me dedicado a criar soluções que realmente fazem a diferença. Busco aprendizagem e troca de ideias contínuas.
-            </p>
-            <p>
-              Atualmente trabalho na <strong className="text-amber-800">JCompany TI</strong>, onde desenvolvo 
-              aplicações SaaS e APIs complexas. Uma das minhas maiores entregas foi o SysLog, 
-              sistema que reduziu <strong className="text-amber-800">45% dos chamados de suporte </strong> 
-              na Secretaria Municipal de Gestão.
-            </p>
-            <p>
-              Formado em <strong className="text-amber-800">Análise e Desenvolvimento de Sistemas</strong> pela 
-              UCSAL com média 9.0, busco constantemente novos desafios e oportunidades de crescimento. Meu 
-              objetivo é continuar evoluindo tecnicamente enquanto entrego valor real aos projetos que participo.
-            </p>
-            
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-10 pt-8 border-t-2 border-amber-700/20">
-              {[
-                { label: 'Localização', value: 'Salvador - BA', icon: 'MapPin' },
-                { label: 'Experiência', value: '2+ anos', icon: 'Calendar' },
-                { label: 'Projetos', value: '10+ entregues', icon: 'Briefcase' },
-                { label: 'Foco', value: 'PHP & Laravel', icon: 'Target' }
-              ].map((item, i) => {
-                const IconComponent = Icons[item.icon];
-                return (
-                  <motion.div
-                    key={i}
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={isInView ? { scale: 1, opacity: 1 } : {}}
-                    transition={{ delay: 0.6 + i * 0.1 }}
-                    whileHover={{ scale: 1.05, y: -3 }}
-                    className="text-center group"
-                  >
-                    <div className="flex justify-center mb-2">
-                      <div className="w-10 h-10 bg-gradient-to-br from-amber-600 to-orange-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <IconComponent />
+        {/* Modal ECV */}
+        {modalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 ecv-modal-bg"
+            style={{ backdropFilter: 'blur(2px)' }}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              className="bg-white rounded-2xl shadow-2xl p-6 max-w-xs w-full relative flex flex-col items-center border-2 border-amber-700/30"
+            >
+              <img src={ecvImg} alt="Escudo do Esporte Clube Vitória" className="w-28 h-28 object-contain mb-4 rounded-xl shadow-md" />
+              <h4 className="text-xl font-bold text-amber-800 mb-2 text-center">Torcedor do Esporte Clube Vitória</h4>
+              <p className="text-stone-700 text-sm text-center mb-2">
+                O <span className="font-semibold text-red-700">Leão da Barra</span> faz parte da minha história! Torço pelo Vitória desde criança, vibrando em cada jogo, seja nos momentos de glória ou superação. Ser rubro-negro compõe parte da minha identidade. <span className="font-bold text-amber-700">Separados somos fortes, juntos <strong>imbatíveis 🦁</strong></span>
+              </p>
+              <button
+                onClick={() => setModalOpen(false)}
+                className="mt-2 px-4 py-1 bg-amber-700 text-white rounded-full font-semibold hover:bg-amber-800 transition-colors"
+              >
+                Fechar
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Conteúdo principal */}
+        <div className="flex-1">
+          <SectionTitle title="Sobre Mim" />
+          <motion.div
+            initial={{ y: 50, opacity: 0 }}
+            animate={isInView ? { y: 0, opacity: 1 } : {}}
+            transition={{ duration: 0.8 }}
+            className="bg-white/70 backdrop-blur-sm p-8 sm:p-12 rounded-2xl border-2 border-amber-700/20 shadow-xl"
+          >
+            <div className="space-y-6 text-stone-700 text-lg leading-relaxed">
+              <p>
+                Olá! Sou <strong className="text-amber-800">Thiago Guilherme</strong>, desenvolvedor full-stack 
+                com foco em PHP e Laravel, natural de Salvador - BA. Minha jornada na tecnologia começou 
+                em 2023, e desde então tenho me dedicado a criar soluções que realmente fazem a diferença. Busco aprendizagem e troca de ideias contínuas.
+              </p>
+              <p>
+                Atualmente trabalho na <strong className="text-amber-800">JCompany TI</strong>, onde desenvolvo 
+                aplicações SaaS e APIs complexas. Uma das minhas maiores entregas foi o SysLog, 
+                sistema que reduziu <strong className="text-amber-800">45% dos chamados de suporte </strong> 
+                na Secretaria Municipal de Gestão.
+              </p>
+              <p>
+                Formado em <strong className="text-amber-800">Análise e Desenvolvimento de Sistemas</strong> pela 
+                UCSAL com média 9.0, busco constantemente novos desafios e oportunidades de crescimento. Meu 
+                objetivo é continuar evoluindo tecnicamente enquanto entrego valor real aos projetos que participo.
+              </p>
+              {/* ...outros hobbies/curiosidades podem ser adicionados aqui como novas bolinhas... */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-10 pt-8 border-t-2 border-amber-700/20">
+                {[
+                  { label: 'Localização', value: 'Salvador - BA', icon: 'MapPin' },
+                  { label: 'Experiência', value: '2+ anos', icon: 'Calendar' },
+                  { label: 'Projetos', value: '10+ entregues', icon: 'Briefcase' },
+                  { label: 'Foco', value: 'PHP & Laravel', icon: 'Target' }
+                ].map((item, i) => {
+                  const IconComponent = Icons[item.icon];
+                  return (
+                    <motion.div
+                      key={i}
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={isInView ? { scale: 1, opacity: 1 } : {}}
+                      transition={{ delay: 0.6 + i * 0.1 }}
+                      whileHover={{ scale: 1.05, y: -3 }}
+                      className="text-center group"
+                    >
+                      <div className="flex justify-center mb-2">
+                        <div className="w-10 h-10 bg-gradient-to-br from-amber-600 to-orange-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                          <IconComponent />
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-xl font-bold text-amber-800 mb-1">{item.value}</div>
-                    <div className="text-xs text-stone-600">{item.label}</div>
-                  </motion.div>
-                );
-              })}
+                      <div className="text-xl font-bold text-amber-800 mb-1">{item.value}</div>
+                      <div className="text-xs text-stone-600">{item.label}</div>
+                    </motion.div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -695,6 +763,44 @@ function SectionTitle({ title }) {
 function ExperienceCard({ exp, index }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
+
+  // Descrições detalhadas para cada achievement
+  const achievementDetails = [
+    [
+      'Desenvolvimento de aplicações SaaS, ERPs e CRMs com PHP 7+ e Laravel',
+      'Criação e manutenção de sistemas robustos para empresas, incluindo ERPs e CRMs, utilizando PHP 7+ e o framework Laravel. Atuação desde o backend até integrações complexas.'
+    ],
+    [
+      'Integração de APIs REST e microserviços',
+      'Desenvolvimento e integração de APIs RESTful, conectando diferentes sistemas e microserviços para garantir escalabilidade e comunicação eficiente.'
+    ],
+    [
+      'Projetos estratégicos com impacto direto na geração de receita',
+      'Participação em projetos que aumentaram a receita da empresa, com foco em soluções tecnológicas que agregam valor ao negócio.'
+    ],
+    [
+      'AWS, Firebird e CI/CD',
+      'Utilização de serviços AWS para infraestrutura, banco Firebird para dados e pipelines CI/CD para automação de deploys.'
+    ],
+    [
+      'Desenvolvimento do SysLog - redução de 45% em chamados',
+      'Criação do sistema SysLog, que otimizou o atendimento e reduziu em 45% os chamados de suporte na Secretaria Municipal.'
+    ],
+    [
+      'Ferramentas de gestão municipal com Laravel',
+      'Desenvolvimento de ferramentas para gestão pública, utilizando Laravel para garantir segurança e escalabilidade.'
+    ],
+    [
+      'MySQL, Oracle, APIs RESTful e Docker',
+      'Experiência com bancos MySQL, Oracle, APIs RESTful e uso de Docker para ambientes isolados.'
+    ],
+    [
+      'Metodologias ágeis em ambiente colaborativo',
+      'Trabalho em equipes ágeis, com foco em colaboração, entregas rápidas e melhoria contínua.'
+    ]
+  ];
+
+  const [activeDetail, setActiveDetail] = useState(null);
 
   return (
     <motion.div
@@ -753,30 +859,61 @@ function ExperienceCard({ exp, index }) {
         </motion.div>
       </div>
       <ul className="space-y-3 relative z-10">
-        {exp.achievements.map((achievement, i) => (
-          <motion.li
-            key={i}
-            initial={{ x: -30, opacity: 0 }}
-            animate={isInView ? { x: 0, opacity: 1 } : {}}
-            transition={{ 
-              delay: index * 0.15 + 0.5 + i * 0.1,
-              type: "spring",
-              stiffness: 100
-            }}
-            whileHover={{ x: 5 }}
-            className="flex items-start text-stone-700 group/item"
-          >
-            <motion.span 
-              className="text-amber-700 mr-3 mt-1 font-bold"
-              whileHover={{ scale: 1.3, rotate: 90 }}
-              transition={{ type: "spring", stiffness: 400 }}
+        {exp.achievements.map((achievement, i) => {
+          // Busca descrição detalhada
+          const detail = achievementDetails.find(([title]) => title === achievement)?.[1];
+          return (
+            <motion.li
+              key={i}
+              initial={{ x: -30, opacity: 0 }}
+              animate={isInView ? { x: 0, opacity: 1 } : {}}
+              transition={{ 
+                delay: index * 0.15 + 0.5 + i * 0.1,
+                type: "spring",
+                stiffness: 100
+              }}
+              whileHover={{ x: 5 }}
+              className="flex items-start text-stone-700 group/item relative"
             >
-              ▸
-            </motion.span>
-            <span className="group-hover/item:text-amber-900 transition-colors">{achievement}</span>
-          </motion.li>
-        ))}
+              <motion.span 
+                className="text-amber-700 mr-3 mt-1 font-bold"
+                whileHover={{ scale: 1.3, rotate: 90 }}
+                transition={{ type: "spring", stiffness: 400 }}
+              >
+                ▸
+              </motion.span>
+              <span 
+                className="group-hover/item:text-amber-900 transition-colors cursor-pointer"
+                onClick={() => setActiveDetail(activeDetail === i ? null : i)}
+              >
+                {achievement}
+              </span>
+            </motion.li>
+          );
+        })}
       </ul>
+      {/* Mini-modal global, fixed centralizado, z-index alto */}
+      {activeDetail !== null && exp.achievements[activeDetail] && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.9 }}
+          className="fixed inset-0 flex items-center justify-center z-[99999]"
+          style={{ pointerEvents: 'auto' }}
+        >
+          <div className="absolute inset-0 bg-black/20" onClick={() => setActiveDetail(null)} />
+          <div className="relative">
+            <div className="bg-white border border-amber-700/30 shadow-2xl rounded-xl p-6 text-sm text-stone-700 w-80 max-w-full">
+              <div className="mb-2 font-bold text-amber-800">{exp.achievements[activeDetail]}</div>
+              <div>{achievementDetails.find(([title]) => title === exp.achievements[activeDetail])?.[1]}</div>
+              <button
+                className="mt-4 px-4 py-1 bg-amber-700 text-white rounded-full font-semibold hover:bg-amber-800 transition-colors"
+                onClick={() => setActiveDetail(null)}
+              >Fechar</button>
+            </div>
+          </div>
+        </motion.div>
+      )}
     </motion.div>
   );
 }
