@@ -244,7 +244,7 @@ function App() {
       <section id="experiência" className="min-h-screen flex items-center justify-center px-4 py-20 relative overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-[0.15] pointer-events-none"
-          style={{ backgroundImage: 'url("/imgcafe.jpg")', backgroundPosition: 'center 30%' }}
+          style={{ backgroundImage: `url("${import.meta.env.BASE_URL}imgcafe.jpg")`, backgroundPosition: 'center 30%' }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-amber-50/20 via-amber-50/10 to-transparent pointer-events-none" />
 
@@ -496,7 +496,7 @@ function HeroSection({ mousePosition }) {
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-[0.15] pointer-events-none"
         style={{
-          backgroundImage: 'url("/imgportifolio.jpg")',
+          backgroundImage: `url("${import.meta.env.BASE_URL}imgportifolio.jpg")`,
           backgroundPosition: 'center 30%'
         }}
       />
