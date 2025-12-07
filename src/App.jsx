@@ -549,24 +549,7 @@ function HeroSection({ mousePosition }) {
           className="text-6xl sm:text-7xl lg:text-8xl font-bold mb-6 text-amber-900 leading-tight"
           style={{ fontFamily: 'Georgia, serif' }}
         >
-          {'Thiago Guilherme'.split('').map((char, index) => (
-            <motion.span
-              key={index}
-              className="inline-block"
-              animate={{
-                y: [0, -4.5, 0],
-              }}
-              transition={{
-                duration: 0.6,
-                repeat: Infinity,
-                repeatDelay: 2,
-                delay: index * 0.05,
-                ease: "easeInOut"
-              }}
-            >
-              {char === ' ' ? '\u00A0' : char}
-            </motion.span>
-          ))}
+          Thiago Guilherme
         </motion.h1>
 
         <motion.div
