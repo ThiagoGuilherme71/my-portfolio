@@ -154,34 +154,42 @@ function App() {
           'Metodologias ágeis em ambiente colaborativo'
         ],
         details: {
-          intro: "Iniciei minha jornada como estagiário de desenvolvimento, focado na otimização de processos internos da Secretaria Municipal e na criação de ferramentas que apoiam servidores na gestão da cidade. Atuei com Laravel, PHP, Docker e Oracle, sempre em um ambiente dinâmico orientado pelo Scrum.",
+          intro: "Atuação como estagiário de desenvolvimento, focado na otimização de processos internos da Secretaria Municipal e na criação de ferramentas que apoiam servidores na gestão da cidade. Atuei com Laravel, PHP, Docker, Oracle e Git/Gitlab, sempre em um ambiente dinâmico guiado pelo Scrum.",
           stack: "PHP 8+, Laravel, Bootstrap, Oracle DB, Docker,Git & GitLab, Scrum.",
-          challenge: "Criar um sistema de logs centralizado (SysLog) que fosse intuitivo para funcionários não-técnicos, resultando em diminuição de tickets de suporte."
+          challenge: "Criar um sistema de logs centralizado (SysLog) que fosse intuitivo para funcionários técnicos e não-técnicos, resultando em diminuição de tickets de suporte."
         }
       }
     ],
     projects: [
       {
-        name: 'SGLoc',
-        description: 'ERP completo para locadoras com gestão de frotas, contratos e pagamentos. App mobile para vistoria.',
-        tech: ['Laravel', 'Integrações Financeiras', 'Firebird', 'Redis', 'API REST'],
-        link: 'https://sgloc.com.br',
-        highlight: 'Em Produção',
+        name: 'ByLink Soluções',
+        description: 'Sistema de vagas e recrutamento (white label) com área pública para candidatos e painel de gestão privado.',
+        tech: ['Next.js', 'Python', 'Supabase', 'Postgres'],
+        link: 'https://www.bylinksolucoes.com.br/',
+        highlight: 'White label • Em Produção',
         color: 'from-blue-600 to-blue-700'
       },
       {
         name: 'SysLog',
         description: 'Sistema de monitoramento de logs para secretaria municipal. Dashboard em tempo real com relatórios detalhados.',
         tech: ['PHP', 'Laravel', 'Oracle', 'Docker', 'Bootstrap', 'Tailwind'],
-        highlight: '45% menos chamados',
-        color: 'from-purple-600 to-purple-700'
+        highlight: '45% menos chamados • Privado',
+        color: 'from-yellow-600 to-yellow-700'
       },
       {
-        name: 'ByLink Soluções',
-        description: 'Sistema de vagas e recrutamento (white label) com área pública para candidatos e painel de gestão privado.',
-        tech: ['Next.js', 'Python', 'Supabase', 'Postgres'],
-        link: 'https://www.bylinksolucoes.com.br/',
-        highlight: 'White label • Full-stack',
+        name: 'Jogo de Xadrez',
+        description: 'Simulador completo de xadrez feito em Java proposto como desafio do curso do professor Nélio Alves. Inclui todas as regras oficiais do xadrez. Simulador via terminal.',
+        tech: ['Java', 'Clean Code', 'SOLID', 'Lógica de programação'],
+        link: 'https://github.com/ThiagoGuilherme71/chess-game-java',
+        highlight: 'Lógica de Programação',
+        color: 'from-red-600 to-red-700'
+      },
+      {
+        name: 'Gerenciador de Projetos',
+        description: 'Gerenciador/Crud de projetos e tarefas. Principais desafios: implementar CI/CD com Docker + GitHub Actions, autenticação com JWT & publicação da imagem no Docker Hub .',
+        tech: ['Laravel', 'PHP', 'SQLite', 'Deploy', 'Docker', 'CI/CD', 'GitHub Actions'],
+        link: 'https://github.com/ThiagoGuilherme71/desafio-crud-projetos',
+        highlight: 'Docker Hub • CI/CD',
         color: 'from-emerald-600 to-emerald-700'
       }
     ]
@@ -341,7 +349,7 @@ function HeroSection() {
     { label: "PHP / Laravel", sub: "Stack Principal", icon: Icons.Code2, color: "text-orange-600", bg: "bg-orange-50" },
     { label: "2+ Anos", sub: "Experiência Pro", icon: Icons.Award, color: "text-blue-600", bg: "bg-blue-50" },
     { label: "45% Otimização", sub: "Case SysLog", icon: Icons.Zap, color: "text-amber-600", bg: "bg-amber-50" },
-    { label: "Front-end", sub: "React & Tailwind", icon: Icons.Palette, color: "text-purple-600", bg: "bg-purple-50" }
+    { label: "Front-end", sub: "Vue, JS, Bootstrap & Tailwind", icon: Icons.Palette, color: "text-purple-600", bg: "bg-purple-50" }
   ];
 
   return (
@@ -361,7 +369,7 @@ function HeroSection() {
         {/* Mudança: Adicionei 'via-35%' (antes era padrão ~50%).
             Isso faz o creme sólido parar antes, revelando a imagem mais cedo.
         */}
-        <div className="absolute inset-0 bg-gradient-to-r from-amber-50 from-10% via-amber-50/95 via-35% to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-amber-50 from-10% via-amber-50/95 via-28% to-transparent" />
         
         {/* Gradiente inferior suave para conectar com a próxima seção */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-amber-50 to-transparent" />
@@ -515,7 +523,7 @@ function SobreSection() {
               <p>
                 Olá! Sou{" "}
                 <strong className="text-orange-700 font-bold">Thiago Guilherme</strong
-                >, desenvolvedor full-stack apaixonado por transformar problemas reais
+                >, desenvolvedor full-stack motivado por transformar problemas reais
                 em soluções eficientes. Nascido e criado em Salvador – BA, trago a
                 criatividade e a energia da minha cidade para cada projeto, unindo
                 arquitetura backend sólida a interfaces modernas e funcionais.
@@ -525,13 +533,13 @@ function SobreSection() {
                 Minha trajetória começou em 2023, nas primeiras aulas de lógica de
                 programação. Hoje atuo como desenvolvedor júnior na{" "}
                 <strong className="text-stone-900 font-bold">JCompany TI</strong>,
-                construindo aplicações SaaS, ERPs e APIs robustas. Entre minhas
+                construindo e aplicações SaaS, ERPs e APIs robustas. Entre minhas
                 entregas, destaco o{" "}
                 <strong className="text-orange-700">SysLog</strong>, que gerou uma
                 redução real de{" "}
                 <strong className="text-green-700 font-bold">
-                  45% em chamados.
-                </strong>{" "}
+                  45% em chamados 
+                </strong>{" "} da Secretaria Municipal de Gestão (SEMGE).
                  Além da <strong className="text-blue-900 font-bold">implementação completa do módulo financeiro </strong> de um ERP,
                 incluindo geração de boletos, cobranças, área white-label e histórico
                 detalhado.
@@ -600,6 +608,18 @@ function ExperienceSection({ experience }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [selectedExp, setSelectedExp] = useState(null);
+
+  useEffect(() => {
+    if (selectedExp) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedExp]);
 
   return (
     <section id="experiência" ref={ref} className="min-h-screen flex items-center justify-center px-4 py-32 relative overflow-hidden z-10">
@@ -673,7 +693,6 @@ function ExperienceCard({ exp, index, isInView, onSelect }) {
     </motion.div>
   );
 }
-
 function ExperienceModal({ exp, onClose }) {
     return (
         <motion.div 
@@ -730,9 +749,9 @@ function ExperienceModal({ exp, onClose }) {
                     )}
                 </div>
                 
-                <div className="p-6 border-t border-stone-100 bg-stone-50 text-center">
+                {/* <div className="p-6 border-t border-stone-100 bg-stone-50 text-center">
                     <button onClick={onClose} className="text-stone-500 font-bold hover:text-orange-600 transition-colors">Fechar Detalhes</button>
-                </div>
+                </div> */}
             </motion.div>
         </motion.div>
     )
