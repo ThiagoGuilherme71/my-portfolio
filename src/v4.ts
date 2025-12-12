@@ -48,7 +48,8 @@ const Icons = {
   Users: (props) => (<svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>),
   Coffee: (props) => (<svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M18 2v2"/><path d="M3.6 10h14.4c1.7 0 3 1.3 3 3v2c0 3.3-2.7 6-6 6h-6c-3.3 0-6-2.7-6-6v-2c0-1.7 1.3-3 3-3Z"/><path d="M21 10v3a3 3 0 0 1-3 3h-3"/></svg>),
   X: (props) => (<svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>),
-  ChevronRight: (props) => (<svg {...props} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>)
+  ChevronRight: (props) => (<svg {...props} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>),
+  Download: (props) => (<svg {...props} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>)
 };
 
 function App() {
@@ -382,7 +383,9 @@ function Navbar({ activeSection, setShowPhotoModal }) {
             {menuItems.map((item) => (
               <a
                 key={item.id}
-                href={`#${item.id}`}
+                href={item.id === 'curriculo' ? `${import.meta.env.BASE_URL}cv_thiago_guilherme.pdf` : `#${item.id}`}
+                target={item.id === 'curriculo' ? '_blank' : undefined}
+                rel={item.id === 'curriculo' ? 'noopener noreferrer' : undefined}
                 className={`relative px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${activeSection === item.id ? 'text-orange-800' : 'text-stone-600 hover:text-orange-700'}`}
               >
                 {activeSection === item.id && (
@@ -470,20 +473,39 @@ function HeroSection() {
               Resolver problemas e dores do mundo real com tecnologia e criatividade é o que me impulsiona. <strong className="text-orange-700">Vamos melhorar o mundo juntos?!</strong>
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex gap-2 sm:gap-4">
               <motion.a 
-                whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.05 }} 
+                whileTap={{ scale: 0.95 }}
                 href="#projetos" 
-                className="px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl shadow-lg shadow-orange-200 transition-all flex items-center gap-2"
+                className="px-4 py-3 sm:px-8 sm:py-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
               >
-                Ver Projetos <Icons.ExternalLink className="w-4 h-4 text-orange-100" />
+                <span className="hidden sm:inline">Ver Projetos</span>
+                <span className="sm:hidden">Projetos</span>
+                <Icons.ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
               </motion.a>
+
               <motion.a 
-                whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.05 }} 
+                whileTap={{ scale: 0.95 }}
                 href="#contato" 
-                className="px-8 py-4 bg-white border border-orange-200 text-stone-700 hover:text-orange-700 hover:border-orange-300 font-bold rounded-xl shadow-sm transition-all"
+                className="px-4 py-3 sm:px-8 sm:py-4 bg-white/95 backdrop-blur-sm text-gray-700 hover:text-orange-600 font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all border border-white/50 text-sm sm:text-base"
               >
-                Fale Comigo
+                <span className="hidden sm:inline">Fale Comigo</span>
+                <span className="sm:hidden">Contato</span>
+              </motion.a>
+
+              <motion.a 
+                whileHover={{ scale: 1.05 }} 
+                whileTap={{ scale: 0.95 }}
+                href={`${import.meta.env.BASE_URL}cv_thiago_guilherme.pdf`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-3 sm:px-8 sm:py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
+              >
+                <Icons.Download className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Currículo</span>
+                <span className="sm:hidden">Currículo</span>
               </motion.a>
             </div>
           </motion.div>
@@ -767,12 +789,12 @@ function ExperienceModal({ exp, onClose }) {
                 className="bg-white w-full max-w-2xl rounded-[2rem] overflow-hidden shadow-2xl relative"
             >
                 {/* Header do Modal */}
-                <div className="bg-gradient-to-r from-amber-100 to-orange-50 p-8 border-b border-orange-100 relative">
-                     <button onClick={onClose} className="absolute top-6 right-6 p-2 bg-white/50 hover:bg-white rounded-full transition-colors">
-                        <Icons.X className="text-stone-600" />
+                <div className="bg-gradient-to-r from-stone-50 to-gray-100 p-8 border-b border-stone-200 relative">
+                     <button onClick={onClose} className="absolute top-6 right-6 p-2 bg-stone-200/50 hover:bg-stone-300/50 rounded-full transition-colors">
+                        <Icons.X className="text-stone-700" width="20" height="20" />
                      </button>
                      <h3 className="text-3xl font-black text-stone-900 mb-1">{exp.title}</h3>
-                     <p className="text-xl text-orange-700 font-bold">{exp.company} <span className="text-stone-400 font-normal text-base ml-2">• {exp.period}</span></p>
+                     <p className="text-xl text-orange-600 font-bold">{exp.company} <span className="text-stone-500 font-normal text-base ml-2">• {exp.period}</span></p>
                 </div>
 
                 {/* Conteúdo do Modal */}
@@ -781,15 +803,15 @@ function ExperienceModal({ exp, onClose }) {
                         <div className="space-y-6">
                             <div>
                                 <h4 className="font-bold text-stone-800 mb-2 flex items-center gap-2"><Icons.Users className="w-5 h-5 text-orange-500" /> O Papel</h4>
-                                <p className="text-stone-600 leading-relaxed">{exp.details.intro}</p>
+                                <p className="text-lg text-stone-600 leading-relaxed">{exp.details.intro}</p>
                             </div>
                              <div>
                                 <h4 className="font-bold text-stone-800 mb-2 flex items-center gap-2"><Icons.Zap className="w-5 h-5 text-yellow-500" /> Principal Desafio</h4>
-                                <p className="text-stone-600 leading-relaxed">{exp.details.challenge}</p>
+                                <p className="text-lg text-stone-600 leading-relaxed">{exp.details.challenge}</p>
                             </div>
                              <div>
-                                <h4 className="font-bold text-stone-800 mb-2 flex items-center gap-2"><Icons.Code2 className="w-5 h-5 text-blue-500" /> Tech Stack Completa</h4>
-                                <div className="bg-stone-50 p-4 rounded-xl text-stone-700 border border-stone-100 font-mono text-sm">
+                                <h4 className="font-bold text-stone-800 mb-2 flex items-center gap-2"><Icons.Code2 className="w-5 h-5 text-blue-500" /> Stack Completa</h4>
+                                <div className="text-lg bg-stone-50 p-4 rounded-xl text-stone-700 border border-stone-100 font-mono text-sm">
                                     {exp.details.stack}
                                 </div>
                             </div>
@@ -1066,15 +1088,15 @@ function ProjectModal({ project, onClose }) {
         className="bg-white w-full max-w-5xl rounded-[2rem] overflow-hidden shadow-2xl relative max-h-[90vh] flex flex-col"
       >
         {/* Header */}
-        <div className={`bg-gradient-to-r ${project.color} p-6 border-b border-white/20 relative`}>
+        <div className="bg-gradient-to-r from-stone-50 to-gray-100 p-6 border-b border-stone-200 relative">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full transition-colors z-10"
+            className="absolute top-4 right-4 p-2 bg-stone-200/50 hover:bg-stone-300/50 rounded-full transition-colors z-10"
           >
-            <Icons.X className="text-white" width="20" height="20" />
+            <Icons.X className="text-stone-700" width="20" height="20" />
           </button>
-          <h3 className="text-3xl font-black text-white mb-2 pr-12">{project.name}</h3>
-          <p className="text-white/90 font-medium">{project.description}</p>
+          <h3 className="text-3xl font-black text-stone-900 mb-2 pr-12">{project.name}</h3>
+          <p className="text-lg text-stone-700 font-medium">{project.description}</p>
         </div>
 
         {/* Galeria de Mídia */}
@@ -1383,9 +1405,17 @@ function Footer() {
             </div>
             <p className="text-stone-400 text-lg max-w-md leading-relaxed font-medium">Desenvolvedor full-stack focado em criar soluções para o mundo real com técnica e a energia da Bahia.</p>
           </div>
-          <div className="flex justify-center md:justify-end">
+          <div className="flex flex-col gap-3 justify-center md:justify-end">
              <a href="#hero" className="group flex items-center gap-2 text-lg font-bold text-orange-400 hover:text-orange-300 transition-colors bg-stone-800 px-6 py-3 rounded-full">
                 Voltar ao topo <span className="group-hover:-translate-y-1 transition-transform">↑</span>
+             </a>
+             <a 
+               href={`${import.meta.env.BASE_URL}cv_thiago_guilherme.pdf`}
+               target="_blank"
+               rel="noopener noreferrer"
+               className="group flex items-center gap-2 text-lg font-bold text-blue-400 hover:text-blue-300 transition-colors bg-stone-800 px-6 py-3 rounded-full"
+             >
+                <Icons.Download className="w-5 h-5" /> Ver Currículo
              </a>
           </div>
         </div>
