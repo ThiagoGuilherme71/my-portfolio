@@ -80,49 +80,49 @@ function App() {
   const data = {
     skills: {
       backend: [
-        { name: 'PHP', level: 80, color: 'from-indigo-500 to-indigo-600' },
-        { name: 'Laravel', level: 82, color: 'from-rose-500 to-rose-600' },
-        { name: 'Java', level: 70, color: 'from-orange-500 to-orange-600' },
-        { name: 'Spring Boot', level: 40, color: 'from-emerald-500 to-emerald-600' },
-        { name: 'API REST', level: 75, color: 'from-sky-500 to-sky-600' },
-        { name: 'Python', level: 45, color: 'from-sky-500 to-sky-600' },
+        { name: 'PHP', level: 85, color: 'from-orange-500 to-orange-600' },
+        { name: 'Laravel', level: 85, color: 'from-amber-500 to-amber-600' },
+        { name: 'Java', level: 65, color: 'from-yellow-500 to-yellow-600' },
+        { name: 'Spring Boot', level: 40, color: 'from-orange-600 to-orange-700' },
+        { name: 'API REST', level: 75, color: 'from-amber-600 to-orange-600' },
+        { name: 'Python', level: 35, color: 'from-yellow-600 to-amber-600' },
       ],
       frontend: [
-        { name: 'JavaScript', level: 75, color: 'from-amber-400 to-amber-500' },
+        { name: 'JavaScript', level: 70, color: 'from-cyan-400 to-cyan-500' },
         { name: 'React', level: 40, color: 'from-cyan-500 to-cyan-600' },
-        { name: 'HTML5', level: 95, color: 'from-orange-500 to-orange-600' },
-        { name: 'CSS3', level: 90, color: 'from-blue-500 to-blue-600' },
-        { name: 'Vue.js', level: 70, color: 'from-blue-500 to-blue-600' },
-        { name: 'TailwindCSS', level: 70, color: 'from-teal-500 to-teal-600' },
-        { name: 'Bootstrap', level: 65, color: 'from-indigo-500 to-indigo-600' },
-        { name: 'React Native', level: 25, color: 'from-indigo-500 to-indigo-600' },
+        { name: 'HTML5', level: 95, color: 'from-sky-500 to-sky-600' },
+        { name: 'CSS3', level: 80, color: 'from-blue-500 to-blue-600' },
+        { name: 'Vue.js', level: 60, color: 'from-cyan-600 to-cyan-700' },
+        { name: 'TailwindCSS', level: 65, color: 'from-sky-400 to-sky-500' },
+        { name: 'Bootstrap', level: 75, color: 'from-blue-600 to-blue-700' },
+        { name: 'React Native', level: 25, color: 'from-cyan-500 to-sky-500' },
       ],
       database: [
-        { name: 'MySQL', level: 85, color: 'from-blue-500 to-blue-600' },
-        { name: 'Oracle', level: 70, color: 'from-red-500 to-red-600' },
-        { name: 'PostgreSQL', level: 76, color: 'from-blue-600 to-blue-700' },
-        { name: 'Redis', level: 60, color: 'from-red-600 to-red-700' },
-        { name: 'Firebird', level: 80, color: 'from-red-600 to-red-700' },
+        { name: 'MySQL', level: 85, color: 'from-emerald-500 to-emerald-600' },
+        { name: 'Oracle', level: 70, color: 'from-teal-500 to-teal-600' },
+        { name: 'PostgreSQL', level: 76, color: 'from-green-500 to-green-600' },
+        { name: 'Redis', level: 60, color: 'from-emerald-600 to-emerald-700' },
+        { name: 'Firebird', level: 80, color: 'from-teal-600 to-teal-700' },
       ],
       tools: [
-        { name: 'Git', level: 90, color: 'from-orange-500 to-orange-600' },
-        { name: 'Docker', level: 75, color: 'from-blue-500 to-blue-600' },
-        { name: 'AWS', level: 60, color: 'from-yellow-500 to-yellow-600' },
-        { name: 'Linux', level: 75, color: 'from-yellow-500 to-yellow-600' },
-        { name: 'Scrum', level: 80, color: 'from-yellow-500 to-yellow-600' },
-        { name: 'Metodologias Ágeis', level: 70, color: 'from-yellow-500 to-yellow-600' },
-        { name: 'Postman', level: 75, color: 'from-yellow-500 to-yellow-600' },
-        { name: 'Figma', level: 60, color: 'from-yellow-500 to-yellow-600' },
+        { name: 'Git', level: 90, color: 'from-purple-500 to-purple-600' },
+        { name: 'Docker', level: 75, color: 'from-purple-600 to-purple-700' },
+        { name: 'AWS', level: 60, color: 'from-violet-500 to-violet-600' },
+        { name: 'Linux', level: 75, color: 'from-violet-600 to-violet-700' },
+        { name: 'Scrum', level: 80, color: 'from-purple-500 to-violet-600' },
+        { name: 'Metodologias Ágeis', level: 70, color: 'from-indigo-500 to-indigo-600' },
+        { name: 'Postman', level: 75, color: 'from-purple-400 to-purple-500' },
+        { name: 'Figma', level: 60, color: 'from-violet-400 to-violet-500' },
       ],
       soft: [
-        { name: 'Comunicação', level: 85, color: 'from-pink-500 to-rose-500' },
-        { name: 'Resolução de Problemas', level: 87, color: 'from-green-500 to-emerald-600' },
-        { name: 'Gestão de Tempo', level: 75, color: 'from-green-500 to-emerald-600' },
-        { name: 'Adaptabilidade', level: 80, color: 'from-yellow-400 to-orange-500' },
-        { name: 'Liderança', level: 55, color: 'from-purple-500 to-indigo-500' },
-        { name: 'Pensamento Crítico', level: 82, color: 'from-indigo-400 to-indigo-500' },
-        { name: 'Compartilhamento de Conhecimento', level: 85, color: 'from-indigo-400 to-indigo-500' },
-        { name: 'Trabalho em Equipe ', level: 80, color: 'from-yellow-400 to-orange-500' }
+        { name: 'Comunicação', level: 75, color: 'from-pink-500 to-pink-600' },
+        { name: 'Resolução de Problemas', level: 80, color: 'from-rose-500 to-rose-600' },
+        { name: 'Gestão de Tempo', level: 75, color: 'from-pink-600 to-rose-600' },
+        { name: 'Adaptabilidade', level: 80, color: 'from-fuchsia-500 to-pink-500' },
+        { name: 'Liderança', level: 65, color: 'from-rose-600 to-rose-700' },
+        { name: 'Pensamento Crítico', level: 70, color: 'from-pink-400 to-pink-500' },
+        { name: 'Compartilhamento de Conhecimento', level: 80, color: 'from-fuchsia-600 to-fuchsia-700' },
+        { name: 'Trabalho em Equipe ', level: 90, color: 'from-rose-400 to-rose-500' }
       ]
     },
     experience: [
@@ -200,7 +200,7 @@ function App() {
         highlight: 'Lógica de Programação',
         color: 'from-red-600 to-red-700',
         image: 'chess-game.png',
-        gallery: ['imgcafe.jpg', 'imgportifolio.jpg'],
+        gallery: ['chess01.png', 'chess02.png',  'chess04.png', 'chess03.png'],
         // video: 'sample-video.mp4' // Exemplo de vídeo
       }
     ]
@@ -1175,67 +1175,145 @@ function ProjectModal({ project, onClose }) {
   );
 }
 
-// --- Seção Skills Modificada (TODAS VISÍVEIS) ---
+// --- Seção Skills com Tabs e Autochange ---
 function SkillsSection({ skills }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const [activeCategory, setActiveCategory] = useState('backend');
+  const [autoplayPaused, setAutoplayPaused] = useState(false);
+  const pauseTimeoutRef = useRef(null);
 
   const categories = {
     backend: { icon: 'Code2', label: 'Backend' },
     frontend: { icon: 'Palette', label: 'Frontend' },
     database: { icon: 'Database', label: 'Banco de Dados' },
     tools: { icon: 'Wrench', label: 'Ferramentas' },
-    soft: { icon: 'Users', label: 'Soft Skills' } // Nova categoria
+    soft: { icon: 'Users', label: 'Soft Skills' }
   };
+
+  const categoryKeys = Object.keys(categories);
+
+  // Autochange a cada 4 segundos quando a seção está visível
+  useEffect(() => {
+    if (!isInView || autoplayPaused) return;
+    
+    const interval = setInterval(() => {
+      setActiveCategory((prev) => {
+        const currentIndex = categoryKeys.indexOf(prev);
+        const nextIndex = (currentIndex + 1) % categoryKeys.length;
+        return categoryKeys[nextIndex];
+      });
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isInView, autoplayPaused, categoryKeys]);
+
+  // Pausar autoplay por 10 segundos ao interagir
+  const handleCategoryClick = (key) => {
+    setActiveCategory(key);
+    setAutoplayPaused(true);
+    
+    // Limpa timeout anterior se existir
+    if (pauseTimeoutRef.current) {
+      clearTimeout(pauseTimeoutRef.current);
+    }
+    
+    // Reativa autoplay após 10 segundos
+    pauseTimeoutRef.current = setTimeout(() => {
+      setAutoplayPaused(false);
+    }, 10000);
+  };
+
+  // Cleanup do timeout ao desmontar
+  useEffect(() => {
+    return () => {
+      if (pauseTimeoutRef.current) {
+        clearTimeout(pauseTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <section id="skills" ref={ref} className="min-h-screen flex items-center justify-center px-4 py-32 relative z-10">
-      <div className="max-w-6xl w-full">
-        <SectionTitle isInView={isInView} subtitle="Tecnologias e habilidades que domino.">Skills & Ferramentas</SectionTitle>
+      <div className="max-w-5xl w-full">
+        <SectionTitle isInView={isInView} subtitle="Tecnologias e habilidades que domino.">
+          Skills & Ferramentas
+        </SectionTitle>
 
-        <div className="space-y-16">
-            {Object.entries(categories).map(([key, cat], sectionIndex) => (
-                <motion.div 
-                    key={key}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: sectionIndex * 0.1 }}
-                >
-                    {/* Cabeçalho da Categoria */}
-                    <div className="flex items-center gap-3 mb-6 border-b border-orange-200/50 pb-2">
-                         {Icons[cat.icon] && <span className="text-orange-500"><cat.icon /></span>} 
-                         {(() => { const I = Icons[cat.icon]; return I ? <I className="w-6 h-6 text-orange-600" /> : null; })()}
-                        <h3 className="text-2xl font-black text-stone-800">{cat.label}</h3>
-                    </div>
+        {/* Botões de Categorias */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.3 }}
+          className="flex flex-wrap justify-center gap-3 mb-12"
+        >
+          {Object.entries(categories).map(([key, cat]) => {
+            const IconComponent = Icons[cat.icon];
+            const isActive = activeCategory === key;
+            return (
+              <motion.button
+                key={key}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => handleCategoryClick(key)}
+                className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all border-2 ${
+                  isActive
+                    ? 'bg-orange-500 text-white border-orange-500 shadow-lg shadow-orange-500/30'
+                    : 'bg-white text-stone-600 border-stone-200 hover:border-orange-300 hover:text-orange-600'
+                }`}
+              >
+                <IconComponent className="w-5 h-5" />
+                {cat.label}
+              </motion.button>
+            );
+          })}
+        </motion.div>
 
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                        {skills[key]?.map((skill, i) => (
-                            <motion.div
-                                key={skill.name}
-                                whileHover={{ scale: 1.02 }}
-                                className="bg-white p-5 rounded-xl border border-orange-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-center"
-                            >
-                                <div className="flex justify-between items-center mb-3">
-                                    <span className="font-bold text-stone-700 flex items-center gap-2">
-                                        <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${skill.color}`}></div>
-                                        {skill.name}
-                                    </span>
-                                    <span className="text-xs font-bold text-stone-400 bg-stone-100 px-2 py-1 rounded">{skill.level}%</span>
-                                </div>
-                                <div className="relative h-2.5 bg-stone-100 rounded-full overflow-hidden">
-                                    <motion.div
-                                        initial={{ width: 0 }}
-                                        animate={isInView ? { width: `${skill.level}%` } : {}}
-                                        transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-                                        className={`absolute inset-y-0 left-0 bg-gradient-to-r ${skill.color} rounded-full`}
-                                    />
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </motion.div>
+        {/* Skills Grid com AnimatePresence */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeCategory}
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ duration: 0.4, ease: "backOut" }}
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {skills[activeCategory]?.map((skill, i) => (
+              <motion.div
+                key={skill.name}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: i * 0.05 }}
+                whileHover={{ scale: 1.03 }}
+                className="bg-white p-6 rounded-2xl border border-orange-100 shadow-md hover:shadow-lg transition-all"
+              >
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-lg font-black text-stone-800 flex items-center gap-2">
+                    <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${skill.color}`}></div>
+                    {skill.name}
+                  </span>
+                  <span className="text-sm font-bold text-stone-500 bg-stone-100 px-2 py-1 rounded-md">
+                    {skill.level}%
+                  </span>
+                </div>
+
+                {/* Barra de progresso */}
+                <div className="relative h-4 bg-stone-100 rounded-full overflow-hidden border border-stone-200/50">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${skill.level}%` }}
+                    transition={{ duration: 1.2, delay: i * 0.05 + 0.2, ease: "easeOut" }}
+                    className={`absolute inset-y-0 left-0 bg-gradient-to-r ${skill.color} rounded-full shadow-sm`}
+                  >
+                    {/* Brilho na barra */}
+                    <div className="absolute top-0 left-0 w-full h-1/2 bg-white/30 rounded-t-full"></div>
+                  </motion.div>
+                </div>
+              </motion.div>
             ))}
-        </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );
