@@ -5,7 +5,7 @@ import { motion, useScroll, useSpring, useInView, AnimatePresence } from 'framer
 
 // Textura de granulação
 const GrainTexture = () => (
-  <div className="fixed inset-0 pointer-events-none z-50 opacity-[0.04] mix-blend-overlay"
+  <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.04] mix-blend-overlay"
     style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}
   />
 );
@@ -47,11 +47,13 @@ const Icons = {
   ExternalLink: (props) => (<svg {...props} xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>),
   Users: (props) => (<svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>),
   Coffee: (props) => (<svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M18 2v2"/><path d="M3.6 10h14.4c1.7 0 3 1.3 3 3v2c0 3.3-2.7 6-6 6h-6c-3.3 0-6-2.7-6-6v-2c0-1.7 1.3-3 3-3Z"/><path d="M21 10v3a3 3 0 0 1-3 3h-3"/></svg>),
-  X: (props) => (<svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>)
+  X: (props) => (<svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>),
+  ChevronRight: (props) => (<svg {...props} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>)
 };
 
 function App() {
   const [activeSection, setActiveSection] = useState('hero');
+  const [showPhotoModal, setShowPhotoModal] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
@@ -167,22 +169,18 @@ function App() {
         tech: ['Next.js', 'Python', 'Supabase', 'Postgres'],
         link: 'https://www.bylinksolucoes.com.br/',
         highlight: 'White label • Em Produção',
-        color: 'from-blue-600 to-blue-700'
+        color: 'from-blue-600 to-blue-700',
+        image: 'imgbylink.png',
+        gallery: ['imgbylink.png', 'bylink02.png', 'bylink03.png']
       },
       {
         name: 'SysLog',
         description: 'Sistema de monitoramento de logs para secretaria municipal. Dashboard em tempo real com relatórios detalhados.',
         tech: ['PHP', 'Laravel', 'Oracle', 'Docker', 'Bootstrap', 'Tailwind'],
         highlight: '45% menos chamados • Privado',
-        color: 'from-yellow-600 to-yellow-700'
-      },
-      {
-        name: 'Jogo de Xadrez',
-        description: 'Simulador completo de xadrez feito em Java proposto como desafio do curso do professor Nélio Alves. Inclui todas as regras oficiais do xadrez. Simulador via terminal.',
-        tech: ['Java', 'Clean Code', 'SOLID', 'Lógica de programação'],
-        link: 'https://github.com/ThiagoGuilherme71/chess-game-java',
-        highlight: 'Lógica de Programação',
-        color: 'from-red-600 to-red-700'
+        color: 'from-yellow-600 to-yellow-700',
+        image: 'ecvimg.jpg',
+        gallery: ['ecvimg.jpg', 'imgecv.jpeg']
       },
       {
         name: 'Gerenciador de Projetos',
@@ -190,7 +188,20 @@ function App() {
         tech: ['Laravel', 'PHP', 'SQLite', 'Deploy', 'Docker', 'CI/CD', 'GitHub Actions'],
         link: 'https://github.com/ThiagoGuilherme71/desafio-crud-projetos',
         highlight: 'Docker Hub • CI/CD',
-        color: 'from-emerald-600 to-emerald-700'
+        color: 'from-emerald-200 to-emerald-300',
+        image: 'crud-projetos01.png',
+        gallery: ['crud-projetos01.png', 'crud-projetos02.png', 'crud-projetos03.png', 'crud-projetos04.png']
+      },
+      {
+        name: 'Jogo de Xadrez',
+        description: 'Simulador completo de xadrez feito em Java proposto como desafio do curso do professor Nélio Alves. Inclui todas as regras oficiais do xadrez. Simulador via terminal.',
+        tech: ['Java', 'Clean Code', 'SOLID', 'Lógica de programação'],
+        link: 'https://github.com/ThiagoGuilherme71/chess-game-java',
+        highlight: 'Lógica de Programação',
+        color: 'from-red-600 to-red-700',
+        image: 'chess-game.png',
+        gallery: ['imgcafe.jpg', 'imgportifolio.jpg'],
+        // video: 'sample-video.mp4' // Exemplo de vídeo
       }
     ]
   };
@@ -215,7 +226,7 @@ function App() {
 
       <motion.div style={{ scaleX }} className="fixed top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 origin-left z-50"/>
 
-      <Navbar activeSection={activeSection} />
+      <Navbar activeSection={activeSection} setShowPhotoModal={setShowPhotoModal} />
       
       {/* NOVA NAVEGAÇÃO ABSTRATA LATERAL */}
       <AbstractNav activeSection={activeSection} />
@@ -230,6 +241,39 @@ function App() {
       </main>
 
       <Footer />
+
+      {showPhotoModal && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-[100]" 
+          onClick={() => setShowPhotoModal(false)}
+        >
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-400 via-amber-500 to-yellow-400 rounded-3xl blur-2xl opacity-40 scale-105"></div>
+            <img 
+              src={`${import.meta.env.BASE_URL}myphoto01.png`} 
+              alt="Thiago Guilherme" 
+              className="relative w-[21.6rem] h-[21.6rem] sm:w-[24rem] sm:h-[24rem] md:w-[28.8rem] md:h-[28.8rem] rounded-3xl object-cover shadow-2xl ring-4 ring-white/80 bg-white p-2"
+              style={{ imageRendering: 'auto' }}
+            />
+            <button
+              onClick={() => setShowPhotoModal(false)}
+              className="absolute -top-4 -right-4 w-10 h-10 bg-white rounded-full shadow-xl flex items-center justify-center text-stone-600 hover:text-orange-600 hover:rotate-90 transition-all duration-300"
+            >
+              <Icons.X width="20" height="20" />
+            </button>
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   );
 }
@@ -294,14 +338,15 @@ function AbstractNav({ activeSection }) {
   );
 }
 
-function Navbar({ activeSection }) {
+function Navbar({ activeSection, setShowPhotoModal }) {
   const menuItems = [
     { id: 'hero', label: 'Início' },
     { id: 'sobre', label: 'Sobre' },
     { id: 'experiência', label: 'Experiência' },
     { id: 'projetos', label: 'Projetos' },
     { id: 'skills', label: 'Skills' },
-    { id: 'contato', label: 'Contato' }
+    { id: 'contato', label: 'Contato' },
+    { id: 'curriculo', label: 'Currículo' }
   ];
 
   return (
@@ -310,14 +355,27 @@ function Navbar({ activeSection }) {
       animate={{ y: 0 }}
       className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl"
     >
-      <motion.div className="bg-white/80 backdrop-blur-xl rounded-2xl border border-amber-100/50 px-6 py-3 shadow-lg shadow-orange-900/5 flex items-center justify-between">
+      <motion.div className="bg-white/80 backdrop-blur-xl rounded-2xl border border-amber-100/50 px-6 py-3 shadow-lg shadow-orange-900/5 flex items-center justify-between md:justify-between">
           <motion.div 
             whileHover={{ scale: 1.02 }}
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-600 rounded-xl flex items-center justify-center text-white font-bold shadow-sm rotate-3">TG</div>
-            <span className="text-stone-800 font-bold tracking-tight hidden sm:block">Thiago Guilherme</span>
+            <div className="relative" onClick={(e) => { e.stopPropagation(); setShowPhotoModal(true); }}>
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-400 to-amber-500 rounded-xl rotate-3 blur-sm opacity-30"></div>
+              <img
+                src={`${import.meta.env.BASE_URL}myphoto-preview.png`}
+                alt="Thiago Guilherme"
+                className="relative w-11 h-11 rounded-xl object-cover cursor-pointer shadow-lg rotate-3 ring-2 ring-white/90 bg-white p-0.5"
+                style={{ imageRendering: 'crisp-edges' }}
+              />
+            </div>
+            <span 
+              className="text-stone-800 font-bold tracking-tight cursor-pointer hover:text-orange-600 transition-colors"
+              onClick={(e) => { e.stopPropagation(); setShowPhotoModal(true); }}
+            >
+              Thiago Guilherme
+            </span>
           </motion.div>
 
           <div className="hidden md:flex items-center bg-stone-50/50 p-1 rounded-xl">
@@ -334,7 +392,6 @@ function Navbar({ activeSection }) {
               </a>
             ))}
           </div>
-           <div className="md:hidden text-stone-600 text-sm font-bold">Menu</div>
       </motion.div>
     </motion.nav>
   );
@@ -369,7 +426,7 @@ function HeroSection() {
         {/* Mudança: Adicionei 'via-35%' (antes era padrão ~50%).
             Isso faz o creme sólido parar antes, revelando a imagem mais cedo.
         */}
-        <div className="absolute inset-0 bg-gradient-to-r from-amber-50 from-10% via-amber-50/95 via-28% to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-amber-50 from-10% via-amber-50/65 via-28% to-transparent" />
         
         {/* Gradiente inferior suave para conectar com a próxima seção */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-amber-50 to-transparent" />
@@ -521,12 +578,12 @@ function SobreSection() {
 
             <div className="space-y-6 text-stone-700 text-lg leading-relaxed relative z-10">
               <p>
-                Olá! Sou{" "}
+                Prazer! Me chamo{" "}
                 <strong className="text-orange-700 font-bold">Thiago Guilherme</strong
                 >, desenvolvedor full-stack motivado por transformar problemas reais
                 em soluções eficientes. Nascido e criado em Salvador – BA, trago a
-                criatividade e a energia da minha cidade para cada projeto, unindo
-                arquitetura backend sólida a interfaces modernas e funcionais.
+                criatividade e a energia da minha cidade para cada projeto, 
+                combinando infraestrutura backend consistente com interfaces modernas e bem pensadas.
               </p>
 
               <p>
@@ -537,7 +594,7 @@ function SobreSection() {
                 entregas, destaco o{" "}
                 <strong className="text-orange-700">SysLog</strong>, que gerou uma
                 redução real de{" "}
-                <strong className="text-green-700 font-bold">
+                <strong className="text-orange-700 font-bold">
                   45% em chamados 
                 </strong>{" "} da Secretaria Municipal de Gestão (SEMGE).
                  Além da <strong className="text-blue-900 font-bold">implementação completa do módulo financeiro </strong> de um ERP,
@@ -680,7 +737,7 @@ function ExperienceCard({ exp, index, isInView, onSelect }) {
           <ul className="space-y-3 mb-4">
             {exp.achievements.slice(0, 2).map((achievement, i) => (
               <li key={i} className="flex items-start gap-3 text-stone-700 leading-relaxed text-sm">
-                <Icons.Sparkles className="w-4 h-4 text-orange-400 flex-shrink-0 mt-1" />
+                <Icons.ChevronRight className="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5" />
                 <span>{achievement}</span>
               </li>
             ))}
@@ -741,7 +798,7 @@ function ExperienceModal({ exp, onClose }) {
                         <div className="space-y-3">
                              {exp.achievements.map((item, i) => (
                                 <li key={i} className="flex items-start gap-3 text-stone-700 leading-relaxed">
-                                    <Icons.Sparkles className="w-5 h-5 text-orange-400 flex-shrink-0 mt-1" />
+                                    <Icons.ChevronRight className="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5" />
                                     <span>{item}</span>
                                 </li>
                              ))}
@@ -759,44 +816,362 @@ function ExperienceModal({ exp, onClose }) {
 
 function ProjectsSection({ projects }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: false, margin: '-100px' });
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [autoplayPaused, setAutoplayPaused] = useState(false);
+  const carouselRef = useRef(null);
+  const pauseTimeoutRef = useRef(null);
+
+  // Autoplay quando a seção está visível
+  useEffect(() => {
+    if (!isInView || selectedProject || autoplayPaused) return;
+    
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % projects.length);
+    }, 4000); // Muda a cada 4 segundos
+
+    return () => clearInterval(interval);
+  }, [isInView, selectedProject, autoplayPaused, projects.length]);
+
+  // Pausar autoplay temporariamente ao clicar nos botões
+  const pauseAutoplay = () => {
+    setAutoplayPaused(true);
+    
+    // Limpa timeout anterior se existir
+    if (pauseTimeoutRef.current) {
+      clearTimeout(pauseTimeoutRef.current);
+    }
+    
+    // Reativa autoplay após 5 segundos
+    pauseTimeoutRef.current = setTimeout(() => {
+      setAutoplayPaused(false);
+    }, 5000);
+  };
+
+  // Navegação do Carrossel
+  const nextSlide = () => {
+    pauseAutoplay();
+    setCurrentSlide((prev) => (prev + 1) % projects.length);
+  };
+
+  const prevSlide = () => {
+    pauseAutoplay();
+    setCurrentSlide((prev) => (prev - 1 + projects.length) % projects.length);
+  };
+
+  // Cleanup do timeout ao desmontar
+  useEffect(() => {
+    return () => {
+      if (pauseTimeoutRef.current) {
+        clearTimeout(pauseTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
-    <section id="projetos" ref={ref} className="min-h-screen flex items-center justify-center px-4 py-32 bg-gradient-to-b from-transparent via-orange-50/50 to-transparent relative z-10">
-      <div className="max-w-6xl w-full">
+    <section id="projetos" ref={ref} className="min-h-screen flex items-center justify-center px-4 py-32 bg-gradient-to-b from-transparent via-orange-50/50 to-transparent relative z-10 overflow-hidden">
+      <div className="max-w-7xl w-full">
         <SectionTitle isInView={isInView} subtitle="Uma seleção dos meus principais trabalhos e estudos.">Projetos Recentes</SectionTitle>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
+        
+        {/* Carrossel Estiloso */}
+        <div className="relative">
+          {/* Navegação */}
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex gap-4">
+              <motion.button
+                whileHover={{ scale: 1.1, boxShadow: "0 10px 30px rgba(249, 115, 22, 0.3)" }}
+                whileTap={{ scale: 0.95 }}
+                onClick={prevSlide}
+                className="w-16 h-16 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white flex items-center justify-center shadow-lg hover:shadow-2xl transition-all text-3xl font-bold border-2 border-orange-400/50"
+              >
+                ‹
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1, boxShadow: "0 10px 30px rgba(249, 115, 22, 0.3)" }}
+                whileTap={{ scale: 0.95 }}
+                onClick={nextSlide}
+                className="w-16 h-16 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 text-white flex items-center justify-center shadow-lg hover:shadow-2xl transition-all text-3xl font-bold border-2 border-orange-400/50"
+              >
+                ›
+              </motion.button>
+            </div>
+            
+            {/* Indicadores */}
+            <div className="flex gap-2">
+              {projects.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`h-2 rounded-full transition-all ${
+                    currentSlide === index ? 'w-8 bg-orange-500' : 'w-2 bg-orange-200'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Cards do Carrossel */}
+          <div className="relative overflow-hidden">
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              whileHover={{ y: -8 }}
-              className="group bg-white rounded-[2rem] border border-orange-100 shadow-xl shadow-orange-100/40 overflow-hidden hover:shadow-orange-200/60 transition-all duration-300 flex flex-col"
+              ref={carouselRef}
+              className="flex gap-8 select-none"
+              animate={{ 
+                x: window.innerWidth < 768 
+                  ? `calc(-${currentSlide * 100}% - ${currentSlide * 32}px)` 
+                  : `calc(-${currentSlide * 50}% - ${currentSlide * 16}px)` 
+              }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 300, 
+                damping: 30
+              }}
             >
-              <div className={`h-32 bg-gradient-to-r ${project.color} relative p-6 flex flex-col justify-between overflow-hidden`}>
-                 <div className="absolute inset-0 opacity-20 mix-blend-overlay bg-[url('/noise.svg')]"></div>
-                 <svg className="absolute bottom-0 left-0 w-full text-white" viewBox="0 0 1440 320" fill="currentColor" preserveAspectRatio="none" height="60"><path d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,261.3C960,256,1056,224,1152,197.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
-                <div className="flex justify-between items-start relative z-10">
-                  <span className="inline-block bg-white/20 backdrop-blur-md text-white border border-white/30 px-3 py-1 rounded-full text-xs font-bold">{project.highlight}</span>
-                  {project.link && (
-                    <motion.a whileHover={{ scale: 1.1, rotate: 5 }} href={project.link} target="_blank" rel="noopener noreferrer" className="text-white/90 hover:text-white transition-colors bg-white/20 p-2 rounded-full"><Icons.ExternalLink width="18" height="18"/></motion.a>
-                  )}
-                </div>
-              </div>
-              <div className="p-8 pt-4 flex flex-col flex-grow bg-white relative z-20">
-                <h3 className="text-2xl font-black text-stone-900 mb-3 group-hover:text-orange-700 transition-colors">{project.name}</h3>
-                <p className="text-stone-600 leading-relaxed mb-8 flex-grow">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mt-auto">
-                  {project.tech.map((tech, i) => <span key={i} className="text-xs bg-orange-50 text-orange-800 px-3 py-1.5 rounded-lg font-bold border border-orange-100/50">{tech}</span>)}
-                </div>
-              </div>
+              {projects.map((project, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="w-full md:w-[calc(50%-16px)] flex-shrink-0"
+                >
+                  <ProjectCard project={project} onOpen={() => setSelectedProject(project)} />
+                </motion.div>
+              ))}
             </motion.div>
-          ))}
+          </div>
         </div>
       </div>
+
+      {/* Modal de Galeria */}
+      <AnimatePresence>
+        {selectedProject && (
+          <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+        )}
+      </AnimatePresence>
     </section>
+  );
+}
+
+// Card Individual do Projeto
+function ProjectCard({ project, onOpen }) {
+  return (
+    <div className="group bg-white rounded-[2rem] border border-orange-100 shadow-xl shadow-orange-100/40 overflow-hidden hover:shadow-orange-200/60 transition-all duration-300 flex flex-col h-full cursor-pointer" onClick={onOpen}>
+      {/* Preview da Imagem */}
+      <div className="relative h-72 overflow-hidden">
+        <motion.img
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.3 }}
+          src={`${import.meta.env.BASE_URL}${project.image}`}
+          alt={project.name}
+          className="w-full h-full object-cover pointer-events-none"
+        />
+        
+        {/* Overlay com Gradient */}
+        <div className={`absolute inset-0 bg-gradient-to-t ${project.color} opacity-60 group-hover:opacity-40 transition-opacity`} />
+        
+        {/* Badge e Link Externo */}
+        <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-10">
+          <span className="inline-block bg-white/90 backdrop-blur-md text-stone-800 border border-white/30 px-3 py-1.5 rounded-full text-xs font-bold shadow-md">
+            {project.highlight}
+          </span>
+          {project.link && (
+            <motion.a
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileTap={{ scale: 0.95 }}
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white/90 backdrop-blur-md p-2.5 rounded-full text-orange-600 hover:text-orange-700 transition-colors shadow-md z-10"
+            >
+              <Icons.ExternalLink width="18" height="18" />
+            </motion.a>
+          )}
+        </div>
+
+        {/* Botão "Ver Mais" */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpen();
+            }}
+            className="bg-white/95 backdrop-blur-md px-6 py-2.5 rounded-full font-bold text-orange-600 shadow-lg opacity-0 group-hover:opacity-100 transition-all flex items-center gap-2 pointer-events-auto"
+          >
+            Ver Galeria <Icons.ExternalLink width="14" height="14" />
+          </motion.button>
+        </div>
+      </div>
+
+      {/* Conteúdo */}
+      <div className="p-6 flex flex-col flex-grow">
+        <h3 className="text-2xl font-black text-stone-900 mb-2 group-hover:text-orange-700 transition-colors">
+          {project.name}
+        </h3>
+        <p className="text-stone-600 leading-relaxed mb-4 flex-grow text-sm">
+          {project.description}
+        </p>
+        <div className="flex flex-wrap gap-2 mt-auto">
+          {project.tech.slice(0, 4).map((tech, i) => (
+            <span
+              key={i}
+              className="text-xs bg-orange-50 text-orange-800 px-3 py-1.5 rounded-lg font-bold border border-orange-100/50"
+            >
+              {tech}
+            </span>
+          ))}
+          {project.tech.length > 4 && (
+            <span className="text-xs bg-stone-100 text-stone-600 px-3 py-1.5 rounded-lg font-bold">
+              +{project.tech.length - 4}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Modal com Galeria
+function ProjectModal({ project, onClose }) {
+  const [currentMedia, setCurrentMedia] = useState(0);
+  const hasVideo = !!project.video;
+  const totalMedia = (project.gallery?.length || 0) + (hasVideo ? 1 : 0);
+
+  const nextMedia = () => setCurrentMedia((prev) => (prev + 1) % totalMedia);
+  const prevMedia = () => setCurrentMedia((prev) => (prev - 1 + totalMedia) % totalMedia);
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-stone-900/90 backdrop-blur-md"
+    >
+      <motion.div
+        initial={{ scale: 0.9, y: 20 }}
+        animate={{ scale: 1, y: 0 }}
+        exit={{ scale: 0.9, y: 20 }}
+        onClick={(e) => e.stopPropagation()}
+        className="bg-white w-full max-w-5xl rounded-[2rem] overflow-hidden shadow-2xl relative max-h-[90vh] flex flex-col"
+      >
+        {/* Header */}
+        <div className={`bg-gradient-to-r ${project.color} p-6 border-b border-white/20 relative`}>
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 p-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full transition-colors z-10"
+          >
+            <Icons.X className="text-white" width="20" height="20" />
+          </button>
+          <h3 className="text-3xl font-black text-white mb-2 pr-12">{project.name}</h3>
+          <p className="text-white/90 font-medium">{project.description}</p>
+        </div>
+
+        {/* Galeria de Mídia */}
+        <div className="relative bg-stone-100 flex-grow flex items-center justify-center overflow-hidden">
+          {/* Navegação */}
+          {totalMedia > 1 && (
+            <>
+              <button
+                onClick={prevMedia}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm text-orange-600 flex items-center justify-center shadow-lg hover:bg-white transition-all"
+              >
+                ‹
+              </button>
+              <button
+                onClick={nextMedia}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm text-orange-600 flex items-center justify-center shadow-lg hover:bg-white transition-all"
+              >
+                ›
+              </button>
+            </>
+          )}
+
+          {/* Conteúdo da Mídia */}
+          <AnimatePresence mode="wait">
+            {hasVideo && currentMedia === 0 ? (
+              <motion.video
+                key="video"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                controls
+                className="max-w-full max-h-[60vh] object-contain"
+              >
+                <source src={`${import.meta.env.BASE_URL}${project.video}`} type="video/mp4" />
+                Seu navegador não suporta vídeos.
+              </motion.video>
+            ) : (
+              <motion.img
+                key={currentMedia}
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -100 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                src={`${import.meta.env.BASE_URL}${project.gallery[hasVideo ? currentMedia - 1 : currentMedia]}`}
+                alt={`${project.name} - ${currentMedia + 1}`}
+                className="max-w-full max-h-[60vh] object-contain"
+              />
+            )}
+          </AnimatePresence>
+
+          {/* Indicadores */}
+          {totalMedia > 1 && (
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full">
+              {Array.from({ length: totalMedia }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentMedia(index)}
+                  className={`h-2 rounded-full transition-all ${
+                    currentMedia === index ? 'w-8 bg-orange-500' : 'w-2 bg-orange-200'
+                  }`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Footer com Tecnologias */}
+        <div className="p-6 border-t border-stone-200 bg-white">
+          <h4 className="font-bold text-stone-800 mb-3 flex items-center gap-2">
+            <Icons.Code2 className="w-5 h-5 text-orange-500" />
+            Tecnologias Utilizadas
+          </h4>
+          <div className="flex flex-wrap gap-2">
+            {project.tech.map((tech, i) => (
+              <span
+                key={i}
+                className="text-sm bg-orange-50 text-orange-800 px-4 py-2 rounded-lg font-bold border border-orange-100"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+          {project.link && (
+            <motion.a
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 bg-orange-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-orange-700 transition-colors shadow-md"
+            >
+              Acessar Projeto <Icons.ExternalLink width="16" height="16" />
+            </motion.a>
+          )}
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -938,7 +1313,7 @@ function Footer() {
         </div>
         <div className="pt-8 border-t border-stone-800 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4 text-stone-500 font-medium">
           <p>© {new Date().getFullYear()} Thiago Guilherme. Todos os direitos reservados.</p>
-          <p className="flex items-center gap-2">Feito com <strong class="text-orange">Dendê</strong> em Salvador.</p>
+          <p className="flex items-center gap-2">Feito com <strong class="text-orange">Dendê</strong>em Salvador.</p>
         </div>
       </div>
     </footer>
