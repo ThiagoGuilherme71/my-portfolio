@@ -1,16 +1,23 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useSpring, useInView, AnimatePresence } from 'framer-motion';
 
-// --- ASSETS & UTILS ---
-
-// Textura de granulação
+/**
+ * Componente de textura de granulação para adicionar efeito visual de ruído
+ * @returns {JSX.Element} Overlay com textura de granulação
+ */
 const GrainTexture = () => (
   <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.04] mix-blend-overlay"
     style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}
   />
 );
 
-// Elementos decorativos
+/**
+ * Elementos decorativos SVG para composição visual
+ * @param {Object} props - Propriedades do componente
+ * @param {'dots'|'squiggle'} props.variant - Tipo de decoração
+ * @param {string} props.className - Classes CSS adicionais
+ * @returns {JSX.Element} Elemento decorativo SVG
+ */
 const IllustrativeDecor = ({ variant = 'dots', className = '' }) => {
   const shapes = {
     dots: (
@@ -59,7 +66,6 @@ function App() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
-  // Desabilitar Tab quando modal está aberto
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (hasModalOpen && e.key === 'Tab') {
@@ -74,17 +80,15 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [hasModalOpen]);
 
-  // Controle de Seções Ativas
   useEffect(() => {
     const handleScroll = () => {
-      if (hasModalOpen) return; // Não atualiza seção se modal estiver aberto
+      if (hasModalOpen) return;
       
       const sections = ['hero', 'sobre', 'experiência', 'projetos', 'skills', 'contato'];
       const current = sections.find(section => {
         const el = document.getElementById(section);
         if (el) {
           const rect = el.getBoundingClientRect();
-          // Ajuste fino: Se o topo do elemento estiver no terço superior da tela
           return rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 3;
         }
         return false;
@@ -265,8 +269,6 @@ function App() {
       <motion.div style={{ scaleX }} className="fixed top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400 origin-left z-50"/>
 
       <Navbar activeSection={activeSection} setShowPhotoModal={setShowPhotoModal} />
-      
-      {/* NOVA NAVEGAÇÃO ABSTRATA LATERAL */}
       <AbstractNav activeSection={activeSection} disabled={hasModalOpen} />
 
       <main className="relative z-10">
@@ -280,7 +282,6 @@ function App() {
 
       <Footer />
 
-      {/* Botão Flutuante de Contato */}
       <motion.a
         href="#contato"
         animate={{ 
@@ -339,7 +340,13 @@ function App() {
   );
 }
 
-// --- Componente de Navegação Abstrata ---
+/**
+ * Navegação lateral abstrata com indicadores visuais
+ * @param {Object} props - Propriedades do componente
+ * @param {string} props.activeSection - Seção atualmente ativa
+ * @param {boolean} props.disabled - Se a navegação deve ser desabilitada
+ * @returns {JSX.Element|null} Componente de navegação ou null se desabilitado
+ */
 function AbstractNav({ activeSection, disabled }) {
   const sections = [
     { id: 'hero', label: 'Início' },
@@ -354,7 +361,6 @@ function AbstractNav({ activeSection, disabled }) {
 
   return (
     <div className="fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center gap-6">
-      {/* Linha "desenhada" conectando os pontos */}
       <div className="absolute top-0 bottom-0 w-px bg-stone-400/30 border-l border-dashed border-stone-400 left-1/2 -translate-x-1/2 -z-10" />
       
       {sections.map((section) => {
@@ -366,12 +372,10 @@ function AbstractNav({ activeSection, disabled }) {
             className="relative group flex items-center justify-center w-6 h-6"
             whileHover={{ scale: 1.2 }}
           >
-            {/* Tooltip ao passar o mouse */}
             <span className="absolute right-8 bg-stone-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
               {section.label}
             </span>
 
-            {/* O Ponto (Dot) */}
             <motion.div
               animate={{
                 width: isActive ? 16 : 8,
@@ -383,7 +387,6 @@ function AbstractNav({ activeSection, disabled }) {
               className="rounded-full shadow-sm"
             />
             
-            {/* Efeito de "rabisco" ao redor quando ativo */}
             {isActive && (
               <motion.svg
                 viewBox="0 0 24 24"
@@ -401,6 +404,13 @@ function AbstractNav({ activeSection, disabled }) {
   );
 }
 
+/**
+ * Barra de navegação principal do site
+ * @param {Object} props - Propriedades do componente
+ * @param {string} props.activeSection - Seção atualmente ativa
+ * @param {Function} props.setShowPhotoModal - Função para controlar modal da foto
+ * @returns {JSX.Element} Componente de navegação
+ */
 function Navbar({ activeSection, setShowPhotoModal }) {
   const menuItems = [
     { id: 'hero', label: 'Início' },
@@ -412,7 +422,6 @@ function Navbar({ activeSection, setShowPhotoModal }) {
     { id: 'curriculo', label: 'Currículo' }
   ];
 
-  // Esconde o menu em mobile quando não está na seção hero
   const isHeroSection = activeSection === 'hero';
 
   return (
@@ -468,7 +477,10 @@ function Navbar({ activeSection, setShowPhotoModal }) {
   );
 }
 
-// --- Seção Hero (Mantida similar, apenas ajustes finos) ---
+/**
+ * Seção principal Hero do portfólio
+ * @returns {JSX.Element} Seção Hero com informações principais
+ */
 function HeroSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false });
@@ -482,8 +494,6 @@ function HeroSection() {
 
   return (
     <section id="hero" ref={ref} className="min-h-screen flex items-center relative overflow-hidden bg-amber-50">
-      
-      {/* --- 1. BACKGROUND --- */}
       <div className="absolute inset-0 z-0">
         <div 
           className="absolute inset-0 bg-cover bg-center md:bg-right"
@@ -492,21 +502,12 @@ function HeroSection() {
             backgroundPosition: '80% center', 
           }}
         />
-        
-        {/* --- 2. GRADIENTE AJUSTADO (15% menor na esquerda) --- */}
-        {/* Mudança: Adicionei 'via-35%' (antes era padrão ~50%).
-            Isso faz o creme sólido parar antes, revelando a imagem mais cedo.
-        */}
         <div className="absolute inset-0 bg-gradient-to-r from-amber-50 from-10% via-amber-50/65 via-28% to-transparent" />
-        
-        {/* Gradiente inferior suave para conectar com a próxima seção */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-amber-50 to-transparent" />
       </div>
 
       <div className="max-w-7xl w-full mx-auto px-6 relative z-10 pt-20 pb-10">
         <div className="grid lg:grid-cols-12 gap-8 items-center">
-          
-          {/* --- COLUNA ESQUERDA: TEXTO --- */}
           <motion.div 
             className="lg:col-span-7 flex flex-col justify-center"
             initial={{ opacity: 0, x: -50 }}
@@ -580,7 +581,6 @@ function HeroSection() {
             </div>
           </motion.div>
 
-          {/* --- COLUNA DIREITA: CARDS --- */}
           <motion.div 
             className="hidden lg:flex flex-col justify-center gap-5 lg:col-span-5 relative"
             initial={{ opacity: 0 }}
@@ -627,6 +627,15 @@ function HeroSection() {
     </section>
   );
 }
+
+/**
+ * Título de seção reutilizável com animações
+ * @param {Object} props - Propriedades do componente
+ * @param {React.ReactNode} props.children - Conteúdo do título
+ * @param {string} props.subtitle - Subtítulo opcional
+ * @param {boolean} props.isInView - Se a seção está visível
+ * @returns {JSX.Element} Título da seção
+ */
 const SectionTitle = ({ children, subtitle, isInView }) => (
   <motion.div initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="text-center mb-16 relative">
     <h2 className="text-4xl sm:text-5xl font-black mb-4 text-stone-900 relative inline-block">
@@ -659,7 +668,6 @@ function SobreSection() {
         </SectionTitle>
 
         <div className="grid lg:grid-cols-12 gap-10 items-start">
-          {/* TEXTOS PRINCIPAIS */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -696,7 +704,6 @@ function SobreSection() {
             </div>
           </motion.div>
 
-          {/* CARDS */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -717,7 +724,6 @@ function SobreSection() {
               </div>
             </div>
 
-            {/* SOFT SKILLS */}
             <div className="bg-white p-6 rounded-2xl border border-amber-100 shadow-md flex items-center gap-5 ">
               <div className="w-14 h-14 bg-blue-500 rounded-xl flex items-center justify-center text-white shadow-sm flex-shrink-0">
                 <Icons.Users />
@@ -731,7 +737,6 @@ function SobreSection() {
               </div>
             </div>
 
-            {/* VALORES */}
             <div className="bg-white p-6 rounded-2xl border border-amber-100 shadow-md flex items-center gap-5 ">
               <div className="w-14 h-14 bg-red-500 rounded-xl flex items-center justify-center text-white shadow-sm flex-shrink-0">
                 <Icons.Award />
@@ -752,7 +757,13 @@ function SobreSection() {
   );
 }
 
-// --- Seção Experiência com MODAL ---
+/**
+ * Seção de Experiências profissionais e acadêmicas com modal de detalhes
+ * @param {Object} props - Propriedades do componente
+ * @param {Array} props.experience - Lista de experiências
+ * @param {Function} props.setHasModalOpen - Função para controlar estado do modal
+ * @returns {JSX.Element} Seção de experiências
+ */
 function ExperienceSection({ experience, setHasModalOpen }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -787,7 +798,6 @@ function ExperienceSection({ experience, setHasModalOpen }) {
         </div>
       </div>
 
-      {/* MODAL */}
       <AnimatePresence>
         {selectedExp && <ExperienceModal exp={selectedExp} onClose={() => setSelectedExp(null)} />}
       </AnimatePresence>
@@ -795,6 +805,15 @@ function ExperienceSection({ experience, setHasModalOpen }) {
   );
 }
 
+/**
+ * Card individual de experiência profissional ou acadêmica
+ * @param {Object} props - Propriedades do componente
+ * @param {Object} props.exp - Dados da experiência
+ * @param {number} props.index - Índice do card
+ * @param {boolean} props.isInView - Se está visível na viewport
+ * @param {Function} props.onSelect - Callback ao selecionar o card
+ * @returns {JSX.Element} Card de experiência
+ */
 function ExperienceCard({ exp, index, isInView, onSelect }) {
   const isEven = index % 2 === 0;
   const isAcademic = exp.isAcademic;
@@ -824,7 +843,6 @@ function ExperienceCard({ exp, index, isInView, onSelect }) {
           onClick={onSelect}
           className={`bg-white p-8 rounded-3xl border ${isAcademic ? 'border-blue-100 shadow-blue-100/30 hover:border-blue-300 hover:shadow-blue-200/50' : 'border-amber-100 shadow-orange-100/30 hover:border-orange-300 hover:shadow-orange-200/50'} shadow-lg relative transition-all cursor-pointer group w-full max-w-md md:max-w-none`}
         >
-          {/* Indicador de Clique */}
           <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
               <div className={`${isAcademic ? 'bg-blue-100 text-blue-600' : 'bg-orange-100 text-orange-600'} p-2 rounded-full`}><Icons.ExternalLink width={16} height={16} /></div>
           </div>
@@ -863,7 +881,6 @@ function ExperienceModal({ exp, onClose }) {
                 onClick={(e) => e.stopPropagation()}
                 className="bg-white w-full max-w-4xl rounded-[2rem] overflow-hidden shadow-2xl relative"
             >
-                {/* Header do Modal */}
                 <div className="bg-gradient-to-r from-stone-50 to-gray-100 p-8 border-b border-stone-200 relative">
                      <button onClick={onClose} className="absolute top-6 right-6 p-2 bg-stone-200/50 hover:bg-stone-300/50 rounded-full transition-colors z-10">
                         <Icons.X className="text-stone-700" width="20" height="20" />
@@ -872,7 +889,6 @@ function ExperienceModal({ exp, onClose }) {
                      <p className="text-xl text-orange-600 font-bold pr-16">{exp.company} <span className="text-stone-500 font-normal text-base ml-2">• {exp.period}</span></p>
                 </div>
 
-                {/* Conteúdo do Modal */}
                 <div className="p-8 max-h-[50vh] overflow-y-auto custom-scrollbar">
                     {exp.details ? (
                         <div className="space-y-6">
@@ -902,15 +918,18 @@ function ExperienceModal({ exp, onClose }) {
                         </div>
                     )}
                 </div>
-                
-                {/* <div className="p-6 border-t border-stone-100 bg-stone-50 text-center">
-                    <button onClick={onClose} className="text-stone-500 font-bold hover:text-orange-600 transition-colors">Fechar Detalhes</button>
-                </div> */}
             </motion.div>
         </motion.div>
     )
 }
 
+/**
+ * Seção de Projetos com carrossel e modal de galeria
+ * @param {Object} props - Propriedades do componente
+ * @param {Array} props.projects - Lista de projetos
+ * @param {Function} props.setHasModalOpen - Função para controlar estado do modal
+ * @returns {JSX.Element} Seção de projetos
+ */
 function ProjectsSection({ projects, setHasModalOpen }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, margin: '-100px' });
@@ -1003,7 +1022,6 @@ function ProjectsSection({ projects, setHasModalOpen }) {
               </motion.button>
             </div>
             
-            {/* Indicadores */}
             <div className="flex gap-2">
               {projects.map((_, index) => (
                 <button
@@ -1017,7 +1035,6 @@ function ProjectsSection({ projects, setHasModalOpen }) {
             </div>
           </div>
 
-          {/* Cards do Carrossel */}
           <div className="relative overflow-hidden">
             <motion.div
               ref={carouselRef}
@@ -1049,7 +1066,6 @@ function ProjectsSection({ projects, setHasModalOpen }) {
         </div>
       </div>
 
-      {/* Modal de Galeria */}
       <AnimatePresence>
         {selectedProject && (
           <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
@@ -1059,11 +1075,16 @@ function ProjectsSection({ projects, setHasModalOpen }) {
   );
 }
 
-// Card Individual do Projeto
+/**
+ * Card individual de projeto com preview e informações
+ * @param {Object} props - Propriedades do componente
+ * @param {Object} props.project - Dados do projeto
+ * @param {Function} props.onOpen - Callback para abrir modal com galeria
+ * @returns {JSX.Element} Card do projeto
+ */
 function ProjectCard({ project, onOpen }) {
   return (
     <div className="group bg-white rounded-[2rem] border border-orange-100 shadow-xl shadow-orange-100/40 overflow-hidden hover:shadow-orange-200/60 transition-all duration-300 flex flex-col h-full cursor-pointer" onClick={onOpen}>
-      {/* Preview da Imagem */}
       <div className="relative h-72 overflow-hidden">
         <motion.img
           whileHover={{ scale: 1.1 }}
@@ -1073,10 +1094,8 @@ function ProjectCard({ project, onOpen }) {
           className="w-full h-full object-cover pointer-events-none"
         />
         
-        {/* Overlay com Gradient */}
         <div className={`absolute inset-0 bg-gradient-to-t ${project.color} opacity-60 group-hover:opacity-40 transition-opacity`} />
         
-        {/* Badge e Link Externo */}
         <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-10">
           <span className="inline-block bg-white/90 backdrop-blur-md text-stone-800 border border-white/30 px-3 py-1.5 rounded-full text-xs font-bold shadow-md">
             {project.highlight}
@@ -1096,7 +1115,6 @@ function ProjectCard({ project, onOpen }) {
           )}
         </div>
 
-        {/* Botão "Ver Mais" */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -1112,7 +1130,6 @@ function ProjectCard({ project, onOpen }) {
         </div>
       </div>
 
-      {/* Conteúdo */}
       <div className="p-6 flex flex-col flex-grow">
         <h3 className="text-2xl font-black text-stone-900 mb-2 group-hover:text-orange-700 transition-colors">
           {project.name}
@@ -1140,7 +1157,13 @@ function ProjectCard({ project, onOpen }) {
   );
 }
 
-// Modal com Galeria
+/**
+ * Modal de galeria de imagens e vídeos do projeto
+ * @param {Object} props - Propriedades do componente
+ * @param {Object} props.project - Dados do projeto
+ * @param {Function} props.onClose - Callback para fechar modal
+ * @returns {JSX.Element} Modal com galeria do projeto
+ */
 function ProjectModal({ project, onClose }) {
   const [currentMedia, setCurrentMedia] = useState(0);
   const hasVideo = !!project.video;
@@ -1171,7 +1194,6 @@ function ProjectModal({ project, onClose }) {
         onClick={(e) => e.stopPropagation()}
         className="bg-white w-full max-w-5xl rounded-[2rem] overflow-hidden shadow-2xl relative max-h-[75vh] flex flex-col"
       >
-        {/* Header */}
         <div className="bg-gradient-to-r from-stone-50 to-gray-100 p-6 border-b border-stone-200 relative">
           <button
             onClick={onClose}
@@ -1183,9 +1205,7 @@ function ProjectModal({ project, onClose }) {
           <p className="text-lg text-stone-700 font-medium">{project.description}</p>
         </div>
 
-        {/* Galeria de Mídia */}
         <div className="relative bg-stone-100 flex-grow flex items-center justify-center overflow-hidden">
-          {/* Navegação */}
           {totalMedia > 1 && (
             <>
               <button
@@ -1203,7 +1223,6 @@ function ProjectModal({ project, onClose }) {
             </>
           )}
 
-          {/* Conteúdo da Mídia */}
           <AnimatePresence mode="wait">
             {hasVideo && currentMedia === 0 ? (
               <motion.video
@@ -1231,7 +1250,6 @@ function ProjectModal({ project, onClose }) {
             )}
           </AnimatePresence>
 
-          {/* Indicadores */}
           {totalMedia > 1 && (
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full">
               {Array.from({ length: totalMedia }).map((_, index) => (
@@ -1247,7 +1265,6 @@ function ProjectModal({ project, onClose }) {
           )}
         </div>
 
-        {/* Footer com Tecnologias */}
         <div className="p-6 border-t border-stone-200 bg-white">
           <h4 className="font-bold text-stone-800 mb-3 flex items-center gap-2">
             <Icons.Code2 className="w-5 h-5 text-orange-500" />
@@ -1281,12 +1298,18 @@ function ProjectModal({ project, onClose }) {
   );
 }
 
-// --- Seção Skills com Tabs e Autochange ---
+/**
+ * Seção de Skills com tabs e autochange (apenas desktop)
+ * @param {Object} props - Propriedades do componente
+ * @param {Object} props.skills - Objeto com categorias de habilidades
+ * @returns {JSX.Element} Seção de skills
+ */
 function SkillsSection({ skills }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [activeCategory, setActiveCategory] = useState('backend');
   const [autoplayPaused, setAutoplayPaused] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const pauseTimeoutRef = useRef(null);
 
   const categories = {
@@ -1299,9 +1322,19 @@ function SkillsSection({ skills }) {
 
   const categoryKeys = Object.keys(categories);
 
-  // Autochange a cada 4 segundos quando a seção está visível
   useEffect(() => {
-    if (!isInView || autoplayPaused) return;
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (!isInView || autoplayPaused || isMobile) return;
     
     const interval = setInterval(() => {
       setActiveCategory((prev) => {
@@ -1425,6 +1458,10 @@ function SkillsSection({ skills }) {
   );
 }
 
+/**
+ * Seção de Contato com links para redes sociais e comunicação
+ * @returns {JSX.Element} Seção de contato
+ */
 function ContactSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -1439,7 +1476,6 @@ function ContactSection() {
   return (
     <section id="contato" ref={ref} className="py-32 px-4 relative z-10">
       <div className="max-w-5xl mx-auto">
-        {/* TEXTO ALTERADO PARA "CAFÉ" */}
         <SectionTitle isInView={isInView} subtitle="Sempre há tempo para novas conexões e desafios.">
             Vamos tomar um café? ☕
         </SectionTitle>
@@ -1475,6 +1511,10 @@ function ContactSection() {
   );
 }
 
+/**
+ * Rodapé do site com informações e links úteis
+ * @returns {JSX.Element} Rodapé do site
+ */
 function Footer() {
   return (
     <footer className="relative bg-stone-900 text-white pt-20 pb-10 px-6 z-10 overflow-hidden">
