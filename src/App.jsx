@@ -320,7 +320,9 @@ function App() {
             <div className="absolute inset-0 bg-gradient-to-br from-orange-400 via-amber-500 to-yellow-400 rounded-3xl blur-2xl opacity-40 scale-105"></div>
             <img 
               src={`${import.meta.env.BASE_URL}myphoto01.png`} 
-              alt="Thiago Guilherme" 
+              alt="Thiago Guilherme"
+              loading="eager"
+              fetchPriority="high"
               className="relative w-[21.6rem] h-[21.6rem] sm:w-[24rem] sm:h-[24rem] md:w-[28.8rem] md:h-[28.8rem] rounded-3xl object-cover shadow-2xl ring-4 ring-white/80 bg-white p-2"
               style={{ imageRendering: 'auto' }}
             />
@@ -410,16 +412,19 @@ function Navbar({ activeSection, setShowPhotoModal }) {
     { id: 'curriculo', label: 'Currículo' }
   ];
 
+  // Esconde o menu em mobile quando não está na seção hero
+  const isHeroSection = activeSection === 'hero';
+
   return (
     <motion.nav
       initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-4xl"
+      animate={{ y: isHeroSection ? 0 : -100 }}
+      className="fixed top-4 left-4 md:left-1/2 md:-translate-x-1/2 md:!translate-y-0 z-50 md:w-[95%] md:max-w-4xl"
     >
-      <motion.div className="bg-white/80 backdrop-blur-xl rounded-2xl border border-amber-100/50 px-6 py-3 shadow-lg shadow-orange-900/5 flex items-center justify-between md:justify-between">
+      <motion.div className="bg-white/80 backdrop-blur-xl rounded-2xl border border-amber-100/50 px-3 sm:px-6 py-3 shadow-lg shadow-orange-900/5 flex items-center justify-center md:justify-between">
           <motion.div 
             whileHover={{ scale: 1.02 }}
-            className="flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer flex-shrink-0"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
             <div className="relative" onClick={(e) => { e.stopPropagation(); setShowPhotoModal(true); }}>
@@ -427,15 +432,18 @@ function Navbar({ activeSection, setShowPhotoModal }) {
               <img
                 src={`${import.meta.env.BASE_URL}myphoto-preview.png`}
                 alt="Thiago Guilherme"
+                loading="eager"
+                fetchPriority="high"
                 className="relative w-11 h-11 rounded-xl object-cover cursor-pointer shadow-lg rotate-3 ring-2 ring-white/90 bg-white p-0.5"
                 style={{ imageRendering: 'crisp-edges' }}
               />
             </div>
             <span 
-              className="text-stone-800 font-bold tracking-tight cursor-pointer hover:text-orange-600 transition-colors"
+              className="text-stone-800 font-bold tracking-tight cursor-pointer hover:text-orange-600 transition-colors text-sm sm:text-base whitespace-nowrap"
               onClick={(e) => { e.stopPropagation(); setShowPhotoModal(true); }}
             >
-              Thiago Guilherme
+              <span className="md:hidden">Thiago Guilherme</span>
+              <span className="hidden md:inline">Thiago Guilherme</span>
             </span>
           </motion.div>
 
@@ -443,7 +451,7 @@ function Navbar({ activeSection, setShowPhotoModal }) {
             {menuItems.map((item) => (
               <a
                 key={item.id}
-                href={item.id === 'curriculo' ? `${import.meta.env.BASE_URL}cv_thiago_guilherme.pdf` : `#${item.id}`}
+                href={item.id === 'curriculo' ? `${import.meta.env.BASE_URL}curriculo_thiago_guilherme.pdf` : `#${item.id}`}
                 target={item.id === 'curriculo' ? '_blank' : undefined}
                 rel={item.id === 'curriculo' ? 'noopener noreferrer' : undefined}
                 className={`relative px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${activeSection === item.id ? 'text-orange-800' : 'text-stone-600 hover:text-orange-700'}`}
@@ -529,8 +537,10 @@ function HeroSection() {
               Software Developer
             </h2>
 
-            <p className="text-lg text-stone-600 leading-relaxed max-w-xl mb-10 font-medium">
-              Resolver problemas do mundo real com tecnologia e criatividade é o que me impulsiona. <strong className="text-orange-700">Vamos melhorar o mundo juntos?!</strong>
+            <p className="text-lg text-stone-700 leading-relaxed max-w-xl mb-10 font-medium">
+              <span className="inline-block bg-white/80 backdrop-blur-sm px-4 py-2 rounded-xl shadow-sm">
+                Resolver problemas do mundo real com tecnologia e criatividade é o que me impulsiona. <strong className="text-orange-700">Vamos melhorar o mundo juntos?!</strong>
+              </span>
             </p>
 
             <div className="flex gap-2 sm:gap-4">
@@ -558,7 +568,7 @@ function HeroSection() {
               <motion.a 
                 whileHover={{ scale: 1.05 }} 
                 whileTap={{ scale: 0.95 }}
-                href={`${import.meta.env.BASE_URL}cv_thiago_guilherme.pdf`}
+                href={`${import.meta.env.BASE_URL}curriculo_thiago_guilherme.pdf`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-4 py-3 sm:px-8 sm:py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
@@ -808,11 +818,11 @@ function ExperienceCard({ exp, index, isInView, onSelect }) {
           </div>
       </div>
 
-      <div className={`w-full md:w-1/2 ${isEven ? 'md:pl-12' : 'md:pr-12'}`}>
+      <div className={`w-full md:w-1/2 ${isEven ? 'md:pl-12' : 'md:pr-12'} flex justify-center md:block`}>
         <motion.div
           whileHover={{ scale: 1.02, rotate: isEven ? 1 : -1 }}
           onClick={onSelect}
-          className={`bg-white p-8 rounded-3xl border ${isAcademic ? 'border-blue-100 shadow-blue-100/30 hover:border-blue-300 hover:shadow-blue-200/50' : 'border-amber-100 shadow-orange-100/30 hover:border-orange-300 hover:shadow-orange-200/50'} shadow-lg relative transition-all cursor-pointer group`}
+          className={`bg-white p-8 rounded-3xl border ${isAcademic ? 'border-blue-100 shadow-blue-100/30 hover:border-blue-300 hover:shadow-blue-200/50' : 'border-amber-100 shadow-orange-100/30 hover:border-orange-300 hover:shadow-orange-200/50'} shadow-lg relative transition-all cursor-pointer group w-full max-w-md md:max-w-none`}
         >
           {/* Indicador de Clique */}
           <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -844,7 +854,7 @@ function ExperienceModal({ exp, onClose }) {
             animate={{ opacity: 1 }} 
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm"
+            className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm"
         >
             <motion.div 
                 initial={{ scale: 0.9, y: 20 }} 
@@ -1152,7 +1162,7 @@ function ProjectModal({ project, onClose }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-stone-900/90 backdrop-blur-md"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-stone-900/90 backdrop-blur-md"
     >
       <motion.div
         initial={{ scale: 0.9, y: 20 }}
@@ -1434,7 +1444,7 @@ function ContactSection() {
             Vamos tomar um café? ☕
         </SectionTitle>
 
-        <div className="grid sm:grid-cols-2 gap-6">
+        <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
           {contacts.map((contact, i) => {
             const IconComponent = Icons[contact.icon];
             return (
@@ -1447,14 +1457,14 @@ function ContactSection() {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.3 + i * 0.1 }}
                 whileHover={{ y: -5, scale: 1.02 }}
-                className="group bg-white p-6 rounded-3xl border border-orange-100 shadow-lg hover:shadow-xl hover:border-orange-300 transition-all flex items-center gap-6"
+                className="group bg-white p-4 sm:p-6 rounded-3xl border border-orange-100 shadow-lg hover:shadow-xl hover:border-orange-300 transition-all flex items-center gap-3 sm:gap-6"
               >
-                <div className={`w-16 h-16 ${contact.color} rounded-2xl flex items-center justify-center text-white shadow-md group-hover:rotate-6 transition-transform`}>
+                <div className={`w-12 h-12 sm:w-16 sm:h-16 ${contact.color} rounded-2xl flex items-center justify-center text-white shadow-md group-hover:rotate-6 transition-transform flex-shrink-0`}>
                   <IconComponent />
                 </div>
-                <div className="overflow-hidden">
-                  <div className="text-lg font-black text-stone-800 mb-1 group-hover:text-orange-700 transition-colors">{contact.label}</div>
-                  <div className="text-stone-600 font-medium truncate">{contact.value}</div>
+                <div className="overflow-hidden min-w-0 flex-1">
+                  <div className="text-base sm:text-lg font-black text-stone-800 mb-1 group-hover:text-orange-700 transition-colors">{contact.label}</div>
+                  <div className="text-sm sm:text-base text-stone-600 font-medium truncate">{contact.value}</div>
                 </div>
               </motion.a>
             );
@@ -1484,7 +1494,7 @@ function Footer() {
                 Voltar ao topo <span className="group-hover:-translate-y-1 transition-transform">↑</span>
              </a>
              <a 
-               href={`${import.meta.env.BASE_URL}cv_thiago_guilherme.pdf`}
+               href={`${import.meta.env.BASE_URL}curriculo_thiago_guilherme.pdf`}
                target="_blank"
                rel="noopener noreferrer"
                className="group flex items-center gap-2 text-lg font-bold text-blue-400 hover:text-blue-300 transition-colors bg-stone-800 px-6 py-3 rounded-full"
